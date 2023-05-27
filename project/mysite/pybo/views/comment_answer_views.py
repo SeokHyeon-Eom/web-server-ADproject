@@ -9,9 +9,6 @@ from pybo.models import Answer, Comment
 
 @login_required(login_url='common:login')
 def comment_create_answer(request, answer_id):
-    """
-    pybo 답글댓글등록
-    """
     answer = get_object_or_404(Answer, pk=answer_id)
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -30,9 +27,6 @@ def comment_create_answer(request, answer_id):
 
 @login_required(login_url='common:login')
 def comment_modify_answer(request, comment_id):
-    """
-    pybo 답글댓글수정
-    """
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
         messages.error(request, '댓글수정권한이 없습니다')
