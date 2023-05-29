@@ -3,9 +3,9 @@ from pybo.models import Question, Answer, Comment
 
 
 class QuestionForm(forms.ModelForm):
-    class Meta: # form과 모델을 연결해주는 class
-        model = Question  # 사용할 모델
-        fields = ['subject', 'content']  # QuestionForm에서 사용할 Question 모델의 속성
+    class Meta:
+        model = Question
+        fields = ['subject', 'content']
         labels = {
             'subject': '제목',
             'content': '내용',

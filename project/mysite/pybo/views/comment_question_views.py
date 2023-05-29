@@ -9,9 +9,6 @@ from pybo.models import Question, Comment
 
 @login_required(login_url='common:login')
 def comment_create_question(request, question_id):
-    """
-    pybo 질문댓글등록
-    """
     question = get_object_or_404(Question, pk=question_id)
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -30,9 +27,6 @@ def comment_create_question(request, question_id):
 
 @login_required(login_url='common:login')
 def comment_modify_question(request, comment_id):
-    """
-    pybo 질문댓글수정
-    """
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
         messages.error(request, '댓글수정권한이 없습니다')
@@ -54,9 +48,6 @@ def comment_modify_question(request, comment_id):
 
 @login_required(login_url='common:login')
 def comment_delete_question(request, comment_id):
-    """
-    pybo 질문댓글삭제
-    """
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
         messages.error(request, '댓글삭제권한이 없습니다')
