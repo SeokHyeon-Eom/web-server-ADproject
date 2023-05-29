@@ -96,7 +96,20 @@
         </div>
     </div>
     <!-- 답변 -->
-    <h5 class="border-bottom my-3 py-2">{{question.answer_set.count}}개의 답변이 있습니다.</h5>
+    <h5 class="border-bottom my-3 py-2">{{ question.answer_set.count }}개의 답변이 있습니다.</h5>
+    <div class="col-2 my-1">
+        <select class='from-control' id='sort'>
+            <option value='recent' {% if so != 'recent' %}selected{% endif %}>
+                최신순
+            </option>
+            <option value='recommend' {% if so == 'recommend' %}selected{% endif %}>
+                추천순
+            </option>
+            <option value='popular' {% if so == 'popular' %}selected{% endif %}>
+                인기순
+            </option>
+        </select>
+    </div>
     {% if answer_list %}
     {% for answer in answer_list %}
     <div class="row my-3">
@@ -196,11 +209,11 @@
         {% if page_number >= answer_list.number|add:-3 and page_number <= answer_list.number|add:3 %}
         {% if page_number == answer_list.number %}
         <li class="page-item active" aria-current="page">
-            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            <a class="page-link" href="?page={{ page_number }}&so={{ so }}">{{ page_number }}</a>
         </li>
         {% else %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            <a class="page-link" href="?page={{ page_number }}&so={{ so }}">{{ page_number }}</a>
         </li>
         {% endif %}
         {% endif %}
@@ -230,6 +243,7 @@
 </div>
 <form id="searchForm" method="get" action="{% url 'pybo:detail' question.id %}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" id="so" name="so" value="{{ so }}">
 </form>
 {% endblock %}
 {% block script %}
@@ -264,6 +278,12 @@ Array.from(recommend_delete).forEach(function(element) {
             location.href = this.dataset.uri;
         };
     });
+});
+const sort_page = document.getElementById("sort");
+sort_page.addEventListener('change', function() {
+    document.getElementById('so').value = document.getElementById('sort').value;
+    document.getElementById('page').value = 1;
+    document.getElementById('searchForm').submit();
 });
 </script>
 {% endblock %}
