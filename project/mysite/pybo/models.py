@@ -8,7 +8,6 @@ class Question(models.Model):
     create_date = models.DateTimeField()
     modify_date = models.DateField(null=True, blank=True)
     modify_counter = models.IntegerField(default=0)
-    answer_comment = models.IntegerField(default=0)
     voter = models.ManyToManyField(User, related_name='voter_question')
 
     def __str__(self):
@@ -36,4 +35,4 @@ class Comment(models.Model):
     modify_counter = models.IntegerField(default=0)
     question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, null=True, blank=True, on_delete=models.CASCADE)
-    voter = models.ManyToManyField(User, related_name='voter_commnet')
+    voter = models.ManyToManyField(User, related_name='voter_comment')
